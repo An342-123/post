@@ -72,6 +72,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:login, :password, :password_confirmation, :admin)
     end
     def check_edit
-      redirect_to user_path, notice: 'Доступ запрещён' if 
+      redirect_to user_path, notice: 'Доступ запрещён' if
       !@user.edit_by?(@current_user)
+    end
 end
