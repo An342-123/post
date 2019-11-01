@@ -1,7 +1,10 @@
+
+<p id="notice"><%= notice %></p>
+
 <%= form_tag session_path do %>
-<%= lable_tag :login, 'Имя пользователя' %>
-<%= text_field_tag :login %>
-<%= lable_tag :password, 'Пароль' %>
-<%= password_field_tag :password %>
-<%= submit_tag 'Войти' %>
-<%= end %>
+  <%= label_tag :login, 'Имя пользователя' %>
+  <%= text_field_tag :login %>
+  <%= label_tag :password, 'Пароль' %>
+  <%= password_field_tag :password %>
+  <%= submit_tag 'Войти' %>
+<%end%>
