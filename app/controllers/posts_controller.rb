@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-before_action :check_edit, only: [:edit, :update, :destroy]
+  before_action :check_edit, only: [:edit, :update, :destroy]
+
   # GET /posts
   # GET /posts.json
   def index
@@ -10,6 +11,8 @@ before_action :check_edit, only: [:edit, :update, :destroy]
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @post.page_views_count = @post.page_views_count.to_i + 1
+    @post.save
   end
 
   # GET /posts/new
@@ -25,6 +28,7 @@ before_action :check_edit, only: [:edit, :update, :destroy]
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user=@current_user
 
     respond_to do |format|
       if @post.save
@@ -67,13 +71,12 @@ before_action :check_edit, only: [:edit, :update, :destroy]
       @post = Post.find(params[:id])
     end
 
-    def check_edit
-      redirect_to user_path, notice: 'Доступ запрещён' if
-      !@post.edit_by?(@current_post)
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:author, :body, :title, :page_views_count)
+      params.require(:post).permit(:author, :body, :title)
+    end
+
+    def check_edit
+      redirect_to post_path, notice: 'Доступ запрещен' if !@post.edit_by?(@current_user)
     end
 end

@@ -1,31 +1,14 @@
 
+<h1 class="blog">Блог</h1>
 
-<div class="posts">
-  <p id="notice"><%= notice %></p>
-
-<h1>Блог</h1>
-
-  <%@posts.each do |post|%>
-<div class="post">
-  <div class="post-header">
-   
-    <div class="post-header-info">
-       <div class="post-title"><%=post.title%></div>
-     <div class="post-created"><%= l(post.created_at, format: :long) %></div>
-       
-    </div>
-    <div class="post-show-more"><%= link_to 'Подробнее', post_path(post)%></div>
+<%@posts.each do |post| %>
+  <div class="post">
+    <h3> <%=post.title%></h3>
+    <p><%= post.body %></p>
+    <small> <%= post.user&.login%></small>
+    <div class="data"><%= l(post.created_at, format: :long) %></div>
+    <%= link_to 'Подробнее', post %>
   </div>
- 
-  <div class="post-content"><%= post.body %></div>
-  <div class="post-login"><%post.user&.login%></div>
-</div>
 <%end%>
 
-
 <%= link_to 'New Post', new_post_path %>
-</div>
-
-
-
-
